@@ -1,56 +1,42 @@
-import React, { Component } from 'react';
-
+import React, { Component } from "react";
 
 class ReviewInput extends Component {
-  
+  state = {
+    text: "",
+  };
 
-    state = {
-    text: '',
-    // review: '',
-
-    }
-
-  handleOnChage = (e) => {
+  handleOnChange = (event) => {
     this.setState({
-      //  [e.target.name]: e.target.value
-      text: e.target.value
-    })
-  }
+      text: event.target.value,
+    });
+  };
 
-  handleOnSubmit = (e) => {
-    //console.log(e)
-    e.preventDefault()
-    this.props.addReview(this.state.text)
+  handleOnSubmit = (event) => {
+    event.preventDefault();
+    this.props.addReview({
+      text: this.state.text,
+      restaurantId: this.props.restaurantId,
+    });
     this.setState({
-      text: '',
-    })
-  }
-  
+      text: "",
+    });
+  };
+
   render() {
     return (
       <div>
-         <h3>Review Input</h3>
-      <form onSubmit={(e) => this.handleOnSubmit(e)}>
-        
-          <label>Review </label>
-        <input 
-          type="text"
-          // name={this.state.text}
-          value={this.state.text}
-          onChange={this.handleOnChage}
+        <form onSubmit={this.handleOnSubmit}>
+          <label>Add Review</label>
+          <input
+            type="text"
+            value={this.state.text}
+            onChange={this.handleOnChange}
           />
-          <br/>
-          {/* <input 
-          type="text"
-          name={this.state.text}
-          value={this.state.name}
-          onChange={this.handleOnChage}
-          /> */}
-      </form>
-      <input type="submit" />
+          <input type="submit" />
+        </form>
       </div>
     );
   }
-};
+}
 
 export default ReviewInput;
